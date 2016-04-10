@@ -16,6 +16,7 @@ setup(
             'oauth2==1.2.0',
             'SocksiPy-branch==1.02',
             'python-dateutil',
+            'M2Crypto',
             ],
         dependency_links=[
             'http://socksipy-branch.googlecode.com/issues/attachment?aid=30003000&name=SocksiPy-branch-1.02.tar.gz&token=61d76a1fa803a56bcfd1a93e34365158#egg=SocksiPy-branch-1.02',

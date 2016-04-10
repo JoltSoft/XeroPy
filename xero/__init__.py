@@ -27,17 +27,21 @@ class Manager(object):
     DATETIME_FIELDS = (u'UpdatedDateUTC', u'Updated', u'FullyPaidOnDate')
     DATE_FIELDS = (u'DueDate', u'Date')
     BOOLEAN_FIELDS = (u'IsSupplier', u'IsCustomer')
+    DECIMAL_FIELDS = (u'AmountPaid')
 
-    MULTI_LINES = (u'LineItem', u'Phone', u'Address', 'TaxRate')
+    MULTI_LINES = (u'LineItem', u'Phone', u'Address', 'TaxRate', 'Option')
     PLURAL_EXCEPTIONS = {'Addresse':'Address'}
+    PLURAL_CONSTANTS = {'TrackingCategories':'TrackingCategory'}
 
     def __init__(self, name, client):
         self.client = client
         self.name = name
-
+        
         # setup our singular variants of the name
         # only if the name ends in 0
-        if name[-1] == "s":
+        if name in self.PLURAL_CONSTANTS:
+            self.singular = self.PLURAL_CONSTANTS[name]
+        elif name[-1] == "s":
             self.singular = name[:len(name)-1]
         else:
             self.singular = name
@@ -131,6 +135,8 @@ class Manager(object):
                 self.dict_to_xml(sub_elm, d)
         else:
             root_elm = self.dict_to_xml(Element(self.singular), data)
+            
+        print tostring(root_elm)
 
         return tostring(root_elm)
 
@@ -218,6 +224,8 @@ class Manager(object):
                     return 'true' if kwargs[key] else 'false'
                 elif key in self.DATETIME_FIELDS:
                     return kwargs[key].isoformat()
+                elif key in self.DECIMAL_FIELDS:
+                    return '%f' % kwargs[key]
                 else:
                     return '"%s"' % str(kwargs[key])
 
@@ -257,7 +265,8 @@ class Xero(object):
 
     OBJECT_LIST = (u'Contacts', u'Accounts', u'CreditNotes',
                    u'Currencies', u'Invoices', u'Organisation',
-                   u'Payments', u'TaxRates', u'TrackingCategories')
+                   u'Payments', u'TaxRates', u'TrackingCategories',
+                   u'RepeatingInvoices')
 
     def __init__(self, consumer_key, consumer_secret, privatekey):
         # instantiate our private api client

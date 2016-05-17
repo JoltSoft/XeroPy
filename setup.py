@@ -19,6 +19,6 @@ setup(
             'M2Crypto',
             ],
         dependency_links=[
-            'http://socksipy-branch.googlecode.com/issues/attachment?aid=30003000&name=SocksiPy-branch-1.02.tar.gz&token=61d76a1fa803a56bcfd1a93e34365158#egg=SocksiPy-branch-1.02',
+            'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/socksipy-branch/SocksiPy-branch-1.02.tar.gz',
             ],
         )
